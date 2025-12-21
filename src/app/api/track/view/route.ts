@@ -9,7 +9,7 @@ const trackViewSchema = z.object({
   variantId: z.string().cuid().optional(),
   slug: z.string().min(1).max(255),
   referrer: z.string().optional().nullable(),
-  utm: z.record(z.string().optional()).optional(),
+  utm: z.record(z.string(), z.string().optional()).optional(),
   sessionKey: z.string().uuid().optional().nullable(),
 });
 
