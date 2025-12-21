@@ -1,27 +1,23 @@
 'use client';
 
 import { useState, useTransition } from 'react';
-import { saveGenerationSettings, checkOllamaStatus } from '@/lib/actions'; 
+import { saveGenerationSettings } from '@/lib/actions'; 
 import { checkOpenAIKey } from '@/actions/openai';
 
-type ProviderType = 'mock' | 'ollama' | 'openai';
+type ProviderType = 'mock' | 'openai';
 
 interface Props {
   initialConfig?: {
     provider: ProviderType;
     apiKey?: string;
     model?: string;
-    baseUrl?: string;
   };
 }
 
 export function GenerationSettings({ initialConfig }: Props) {
   const [isPending, startTransition] = useTransition();
   const [provider, setProvider] = useState<ProviderType>(initialConfig?.provider || 'mock');
-  // We mock the API key state for OpenAI because we don't want to store it in client state/cookies.
-  // We only keep it for Ollama/Model settings persistence if needed.
   const [model, setModel] = useState(initialConfig?.model || '');
-  const [baseUrl, setBaseUrl] = useState(initialConfig?.baseUrl || 'http://localhost:11434');
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [message, setMessage] = useState('');
 
@@ -30,10 +26,8 @@ export function GenerationSettings({ initialConfig }: Props) {
       try {
         await saveGenerationSettings({
           provider,
-          // We intentionally DO NOT save apiKey for OpenAI to cookies
           apiKey: undefined, 
-          model: model || (provider === 'openai' ? 'gpt-4o' : 'llama3.2'),
-          baseUrl: provider === 'ollama' ? baseUrl : undefined,
+          model: model || (provider === 'openai' ? 'gpt-4o' : undefined),
         });
         setStatus('success');
         setMessage('Settings saved successfully.');
@@ -58,11 +52,6 @@ export function GenerationSettings({ initialConfig }: Props) {
               error: check.connected ? undefined : check.message,
               message: check.message
           };
-        } else if (provider === 'ollama') {
-          // We can't check ollama nicely from server without the URL, which might be localhost relative to server or client.
-          // Usually checkOllamaStatus runs server-side.
-          const res = await checkOllamaStatus(baseUrl);
-          result = res;
         } else {
           result = { success: true, message: 'Mock provider always active' };
         }
@@ -99,12 +88,10 @@ export function GenerationSettings({ initialConfig }: Props) {
           >
             <option value="mock">Mock (Default / Free)</option>
             <option value="openai">OpenAI (Primary / Cloud)</option>
-            <option value="ollama">Ollama (Secondary / Local)</option>
           </select>
           <p className="mt-1 text-sm text-slate-500">
             {provider === 'mock' && "Uses deterministic, fake data. No setup required."}
             {provider === 'openai' && "High quality. Requires OPENAI_API_KEY in server environment."}
-            {provider === 'ollama' && "Free and private, requires local Ollama installation."}
           </p>
         </div>
 
@@ -127,26 +114,14 @@ export function GenerationSettings({ initialConfig }: Props) {
           </div>
         )}
 
-        {provider === 'ollama' && (
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Base URL</label>
-            <input 
-              type="text" 
-              value={baseUrl}
-              onChange={(e) => setBaseUrl(e.target.value)}
-              className="w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-            />
-          </div>
-        )}
-
-        {(provider === 'openai' || provider === 'ollama') && (
+        {provider === 'openai' && (
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">Model Name</label>
             <input 
               type="text" 
               value={model}
               onChange={(e) => setModel(e.target.value)}
-              placeholder={provider === 'openai' ? 'gpt-4o' : 'llama3.2'}
+              placeholder="gpt-4o"
               className="w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             />
           </div>
@@ -160,16 +135,6 @@ export function GenerationSettings({ initialConfig }: Props) {
           >
             {isPending ? 'Saving...' : 'Save Settings'}
           </button>
-          
-          {provider === 'ollama' && (
-            <button
-              onClick={handleTest}
-              disabled={isPending}
-              className="px-4 py-2 bg-white text-slate-700 border border-slate-300 rounded-md hover:bg-slate-50 disabled:opacity-50"
-            >
-              Test Connection
-            </button>
-          )}
         </div>
       </div>
     </div>

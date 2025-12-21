@@ -128,15 +128,7 @@ export async function saveGenerationSettings(settings: GenerationConfig) {
   return { success: true };
 }
 
-export async function checkOllamaStatus(baseUrl: string = 'http://localhost:11434') {
-  try {
-    const res = await fetch(`${baseUrl}/api/tags`); // Lightweight check
-    if (res.ok) return { success: true };
-    return { success: false, error: `Ollama unavailable: ${res.statusText}` };
-  } catch (e: any) {
-    return { success: false, error: e.message };
-  }
-}
+
 
 export async function checkOpenAIStatus(apiKey: string) {
   if (!apiKey) return { success: false, error: 'API Key missing' };

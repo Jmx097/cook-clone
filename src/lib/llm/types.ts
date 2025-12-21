@@ -1,12 +1,12 @@
 import { z } from 'zod';
 
-export type ProviderType = 'mock' | 'ollama' | 'openai';
+export type ProviderType = 'mock' | 'openai';
 
 export interface GenerationConfig {
   provider: ProviderType;
   model?: string;
   apiKey?: string; // For OpenAI
-  baseUrl?: string; // For Ollama
+
 }
 
 /**
@@ -24,7 +24,7 @@ export function validateConfig(config: GenerationConfig): { valid: boolean; erro
 export type JsonSchema = Record<string, any>;
 
 /**
- * Generic interface for a low-level LLM client (OpenAI or Ollama).
+ * Generic interface for a low-level LLM client (OpenAI).
  * It validates output against a Zod schema.
  */
 export interface LLMClient {

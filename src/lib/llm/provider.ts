@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers';
 import { LLMClient, ProviderType, GenerationConfig } from './types';
 import { OpenAIClient } from './openai';
-import { OllamaClient } from './ollama';
+
 
 export const SETTINGS_COOKIE = 'llm_settings';
 
@@ -55,9 +55,7 @@ export async function getLLMClient(): Promise<LLMClient | null> {
     return new OpenAIClient(config.apiKey, config.model || 'gpt-4o');
   }
 
-  if (config.provider === 'ollama') {
-    return new OllamaClient(config.baseUrl || 'http://localhost:11434', config.model || 'llama3.2');
-  }
+
 
   return null; // Mock or invalid
 }
