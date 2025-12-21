@@ -1,4 +1,4 @@
-import { prisma } from '@/lib/prisma';
+import { prisma } from '@/lib/db';
 
 export interface HardeningConfig {
   maxDailyBudgetUsd: number; // e.g., 5.0
@@ -26,7 +26,8 @@ export class BudgetManager {
     const result = await prisma.generationRun.aggregate({
       _sum: {
         costEstimate: true,
-        totalTokens: true,
+        inputTokens: true,
+        outputTokens: true,
       },
       where: {
         provider,
@@ -40,7 +41,7 @@ export class BudgetManager {
     });
 
     const totalCost = result._sum.costEstimate || 0;
-    const totalTokens = result._sum.totalTokens || 0;
+    const totalTokens = (result._sum.inputTokens || 0) + (result._sum.outputTokens || 0);
 
     // 3. Compare against limits
     // TODO: Ideally fetch these limits from a user settings table or Env Var.
@@ -107,7 +108,7 @@ export async function logGenerationRun(
     error?: string
 ) {
     try {
-        const { prisma } = await import('@/lib/prisma');
+        const { prisma } = await import('@/lib/db');
         const cost = BudgetManager.estimateCost(model, inputTokens, outputTokens);
         
         await prisma.generationRun.create({

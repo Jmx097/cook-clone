@@ -1,4 +1,4 @@
-import { prisma } from '@/lib/prisma';
+import { prisma } from '@/lib/db';
 
 export async function UsageDashboard() {
   // Fetch recent runs
@@ -14,7 +14,8 @@ export async function UsageDashboard() {
   const aggregation = await prisma.generationRun.aggregate({
     _sum: {
       costEstimate: true,
-      totalTokens: true
+      inputTokens: true, 
+      outputTokens: true
     },
     where: {
       createdAt: { gte: startOfDay },

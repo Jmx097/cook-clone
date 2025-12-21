@@ -117,7 +117,7 @@ export class OpenAIClient implements LLMClient {
     // We import prisma dynamically or use the one from lib (but wait, OpenAIClient is in lib/llm, prisma in lib/prisma).
     // Circular dependency risk? No, lib/llm depends on lib/prisma is fine.
     try {
-        const { prisma } = await import('@/lib/prisma');
+        const { prisma } = await import('@/lib/db');
         const { BudgetManager } = await import('./hardening'); // Calculate cost
 
         let cost = 0;
