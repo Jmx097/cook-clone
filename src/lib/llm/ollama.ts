@@ -17,7 +17,7 @@ export class OllamaClient implements LLMClient {
     schemaName: string = 'result',
     systemPrompt: string = 'You are a helpful AI assistant.'
   ): Promise<T> {
-    const jsonSchema = zodToJsonSchema(schema, { name: schemaName });
+    const jsonSchema = zodToJsonSchema(schema as any, { name: schemaName });
     const schemaObj = (jsonSchema as any).definitions ? (jsonSchema as any).definitions[schemaName] || jsonSchema : jsonSchema;
 
     // Ollama uses 'format' parameter with JSON schema
