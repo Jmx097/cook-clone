@@ -1,0 +1,374 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// ============================================
+// ENUMS
+// ============================================
+
+enum ReportStatus {
+  DRAFT
+  FINAL
+  FAILED
+}
+
+enum ExportType {
+  PDF
+  BUNDLE
+}
+
+enum ExportStatus {
+  QUEUED
+  RUNNING
+  DONE
+  FAILED
+}
+
+// ============================================
+// MODELS
+// ============================================
+
+model CronHeartbeat {
+  id        String   @id @default(cuid())
+  key       String   @unique // e.g. "content-runner"
+  lastRunAt DateTime @default(now())
+}
+
+
+// User (dev-only for Mission 2)
+model User {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  name      String?
+  projects  Project[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+// Project - core business idea
+model Project {
+  id                  String               @id @default(cuid())
+  idea                String
+  targetMarket        String
+  revenueGoal         String
+  brandVoiceBrief     String
+  userId              String
+  user                User                 @relation(fields: [userId], references: [id])
+  researchReports     ResearchReport[]
+  assetBundles        AssetBundle[]
+  offers              Offer[]
+  landingPageVariants LandingPageVariant[]
+  leads               Lead[]
+  exportJobs          ExportJob[]
+
+  // Analytics & A/B Testing (Mission 14)
+  pageViewEvents   PageViewEvent[]
+  conversionEvents ConversionEvent[]
+  abTests          ABTest[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ResearchReport - versioned market research
+model ResearchReport {
+  id        String       @id @default(cuid())
+  projectId String
+  project   Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  version   Int          @default(1)
+  status    ReportStatus @default(DRAFT)
+  content   Json?
+  sources   Json?
+  inputHash String? // SHA256 of normalized inputs for caching
+
+  // Mission 7: Approvals
+  approvedAt       DateTime?
+  approvedByUserId String?
+  approvalNotes    String?
+
+  createdAt DateTime @default(now())
+
+  @@unique([projectId, version])
+  @@index([projectId, inputHash]) // Index for cache lookup
+}
+
+// AssetBundle - versioned marketing assets
+model AssetBundle {
+  id          String       @id @default(cuid())
+  projectId   String
+  project     Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  version     Int          @default(1)
+  status      ReportStatus @default(DRAFT)
+  landingCopy Json?
+  emails      Json?
+  ads         Json?
+  salesScript Json?
+  videoScript Json?
+
+  // Mission 7: Approvals
+  approvedAt       DateTime?
+  approvedByUserId String?
+  approvalNotes    String?
+
+  createdAt DateTime @default(now())
+
+  @@unique([projectId, version])
+}
+
+// Offer - versioned pricing/offer structure
+model Offer {
+  id        String       @id @default(cuid())
+  projectId String
+  project   Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  version   Int          @default(1)
+  status    ReportStatus @default(DRAFT)
+
+  // Legacy fields (kept for backward compatibility, will be removed in future mission)
+  tiers     Json?
+  upsells   Json?
+  guarantee String?
+  rationale String?
+
+  // New structured fields (Mission 5)
+  contentJson Json? // OfferContentJson: positioning, tiers[], upsells[], guarantee, rationale
+  metaJson    Json? // Per-field provenance tracking
+  inputHash   String? // SHA256(project + research.version + builderVersion)
+
+  // Mission 7: Approvals
+  approvedAt       DateTime?
+  approvedByUserId String?
+  approvalNotes    String?
+
+  createdAt DateTime @default(now())
+
+  @@unique([projectId, version])
+  @@index([projectId, inputHash])
+}
+
+// ExportJob - async export tasks
+model ExportJob {
+  id         String       @id @default(cuid())
+  projectId  String
+  project    Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  type       ExportType
+  status     ExportStatus @default(QUEUED)
+  outputPath String?
+  error      String?
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+
+  @@index([projectId, createdAt])
+  @@index([status])
+}
+
+// ============================================
+// MISSION 7: NEW MODELS
+// ============================================
+
+model Template {
+  id          String  @id @default(cuid())
+  name        String
+  description String?
+  tags        String? // Comma-separated or JSON
+
+  // Provenance (what originated this template)
+  sourceOfferId       String?
+  sourceAssetBundleId String?
+
+  // The Snapshot
+  templateJson Json // { offer: {}, assets: {}, meta: {} }
+
+  createdAt DateTime @default(now())
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  userId     String?
+  projectId  String?
+  entityType String
+  entityId   String
+  action     String // e.g., "RESEARCH_APPROVED", "TEMPLATE_USED"
+  metaJson   Json?
+  createdAt  DateTime @default(now())
+
+  @@index([projectId, createdAt])
+  @@index([entityType, entityId])
+}
+
+model GenerationRun {
+  id        String  @id @default(cuid())
+  projectId String?
+  // relation to Project if we want, but might be nullable for global tasks
+  provider  String // openai | ollama | mock
+  model     String?
+  status    String // RUNNING, DONE, FAILED, BLOCKED
+
+  inputTokens  Int?
+  outputTokens Int?
+  latencyMs    Int?
+  costEstimate Float? // Estimated cost in USD
+
+  error     String?
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([provider, createdAt])
+}
+
+// LandingPageVariant - versioned landing page layout
+model LandingPageVariant {
+  id        String  @id @default(cuid())
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  version   Int     @default(1)
+  status    String  @default("DRAFT") // DRAFT, PUBLISHED, ARCHIVED 
+  // actually, ReportStatus might not be enough if we want PUBLISHED vs APPROVED/FINAL.
+  // Directive says: DRAFT | PUBLISHED | ARCHIVED. 
+  // Let's assume we reuse ReportStatus for 'FINAL' as 'PUBLISHED' or we add a new string field or new enum.
+  // The plan said: status (DRAFT|PUBLISHED|ARCHIVED). 
+  // Since ReportStatus is enum, we might need a new enum or just use String.
+  // Using String for flexibility as per plan "status (DRAFT|PUBLISHED|ARCHIVED)" 
+  // but existing models use ReportStatus. 
+  // Let's stick to the plan's specific strings if possible, OR add to enum. 
+  // Adding to enum requires migration. 
+  // Let's use a String status for now to avoid breaking existing enum usage if not easy, 
+  // BUT the plan said "status (DRAFT|PUBLISHED|ARCHIVED)".
+  // I will use String to be safe and flexible, or I can update the Enum.
+  // I'll update the Enum 'ReportStatus' to include PUBLISHED/ARCHIVED? 
+  // Or just make a new Enum 'PageStatus'. I'll make a new Enum.
+
+  slug     String? // Unique when published
+  title    String?
+  pageJson Json // The section structure
+  metaJson Json? // Provenance
+
+  approvedAt DateTime?
+  createdAt  DateTime  @default(now())
+
+  @@unique([projectId, version])
+  @@unique([slug]) // Slug might be null for drafts, unique constraint on nullable depends on DB. SQLite allows multiple nulls.
+  @@index([projectId, createdAt])
+}
+
+model Lead {
+  id        String  @id @default(cuid())
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  landingPageVariantId String? // Nullable if variant deleted
+  // We don't necessarily need a strict relation if we want to keep leads even if page is deleted, but logical relation is good.
+
+  name    String
+  email   String
+  phone   String?
+  message String?
+
+  utmJson   Json?
+  referrer  String?
+  ipHash    String?
+  userAgent String?
+
+  status String  @default("NEW") // NEW, CONTACTED, DISQUALIFIED
+  notes  String?
+
+  createdAt DateTime @default(now())
+
+  @@index([status, createdAt])
+}
+
+// ============================================
+// MISSION 14: ANALYTICS & A/B TESTING
+// ============================================
+
+model PageViewEvent {
+  id        String  @id @default(cuid())
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  // Link to variant (optional if variant is deleted, but we keep the ID for stats)
+  landingPageVariantId String?
+
+  slug     String // The slug visited
+  referrer String?
+  utmJson  Json? // Source, medium, campaign, etc.
+
+  // Privacy-first tracking
+  sessionKey    String? // Client-generated UUID (optional)
+  ipHash        String? // Salted SHA256 (no raw IP)
+  userAgentHash String? // Hash of UA for bot detection
+
+  metaJson  Json? // Extra metadata
+  createdAt DateTime @default(now())
+
+  @@index([projectId, createdAt])
+  @@index([landingPageVariantId, createdAt])
+}
+
+model ConversionEvent {
+  id        String  @id @default(cuid())
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  landingPageVariantId String?
+  leadId               String? // Link to Lead if available
+  // Relation to Lead is loose to avoid circular deletes or strict constraints
+
+  revenue Float @default(0)
+
+  // Duplicate tracking props for attribution even if Lead unrelated
+  utmJson    Json?
+  sessionKey String?
+  ipHash     String?
+
+  metaJson  Json?
+  createdAt DateTime @default(now())
+
+  @@index([projectId, createdAt])
+  @@index([landingPageVariantId, createdAt])
+}
+
+model ABTest {
+  id        String  @id @default(cuid())
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  name   String
+  status String @default("DRAFT") // DRAFT, RUNNING, STOPPED, ARCHIVED, FINISHED
+
+  controlVariantId     String
+  challengerVariantIds Json // List of strings
+
+  trafficWeightsJson Json // { "varId": 50, "varId2": 50 }
+
+  winnerVariantId String?
+
+  startedAt         DateTime?
+  endedAt           DateTime?
+  createdAt         DateTime           @default(now())
+  assignments       ABTestAssignment[]
+
+  @@index([projectId, status])
+}
+
+model ABTestAssignment {
+  id       String @id @default(cuid())
+  abTestId String
+  abTest   ABTest @relation(fields: [abTestId], references: [id], onDelete: Cascade)
+
+  assignmentKeyHash String // Hash of sessionKey or ipHash
+  variantId         String
+
+  createdAt DateTime @default(now())
+
+  @@unique([abTestId, assignmentKeyHash])
+  @@index([createdAt]) // For pruning
+}

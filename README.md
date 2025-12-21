@@ -31,6 +31,15 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new).
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FJmx097%2Fcook-clone&env=DATABASE_URL,BLOB_READ_WRITE_TOKEN,OPENAI_API_KEY&envDescription=Required+configuration+for+Database%2C+Storage%2C+and+AI.&envLink=https%3A%2F%2Fgithub.com%2FJmx097%2Fcook-clone%2Fblob%2Fmain%2Fdocs%2Fvercel_deploy.md)
+
+See [docs/vercel_deploy.md](docs/vercel_deploy.md) for detailed deployment instructions and environment variable setup.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Optional: Enable OpenAI (BYOK)
+
+This project supports using your own OpenAI API key for generation features.
+See [docs/byok_openai.md](docs/byok_openai.md) for setup instructions.
