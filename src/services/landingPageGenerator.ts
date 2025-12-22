@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { AssetBundle, Offer, ResearchReport } from '@prisma/client';
+import { AssetBundle, Offer, ResearchReport } from '@/generated/prisma';
 import { getLLMClient } from '../lib/llm/provider';
 import { logGenerationRun } from '../lib/llm/hardening';
 
@@ -106,40 +106,42 @@ export async function generateLandingPage(
         'You are an expert copywriter and web designer. Generate a high-converting landing page structure.'
       );
       
-      await logGenerationRun({
-        projectId,
-        provider: 'openai', // or infer from client type? client doesn't expose it easily yet without cast.
-        // Assuming we can fix this or just generic 'llm'
-        model: 'unknown',
-        status: 'DONE',
-        inputTokens: prompt.length / 4, // rough est
-        outputTokens: JSON.stringify(result).length / 4,
-        latencyMs: Date.now() - startTime,
-      });
+      await logGenerationRun(
+        'openai',
+        'unknown',
+        'DONE',
+        Math.round(prompt.length / 4),
+        Math.round(JSON.stringify(result).length / 4),
+        Date.now() - startTime
+      );
 
       return result;
     }
   } catch (error) {
     console.error('LLM Generation failed, falling back to mock', error);
-    await logGenerationRun({
-      projectId,
-      provider: 'llm',
-      status: 'FAILED',
-      error: error instanceof Error ? error.message : String(error),
-      latencyMs: Date.now() - startTime,
-    });
+    await logGenerationRun(
+      'llm',
+      'unknown',
+      'FAILED',
+      0,
+      0,
+      Date.now() - startTime,
+      error instanceof Error ? error.message : String(error)
+    );
   }
 
   // Fallback / Default: Deterministic method
   const mockResult = generateDeterministicPage(assetBundle, offer);
   
   // Log mock run
-  await logGenerationRun({
-    projectId,
-    provider: 'mock',
-    status: 'DONE',
-    latencyMs: Date.now() - startTime,
-  });
+  await logGenerationRun(
+    'mock',
+    'deterministic',
+    'DONE',
+    0,
+    0,
+    Date.now() - startTime
+  );
 
   return mockResult;
 }

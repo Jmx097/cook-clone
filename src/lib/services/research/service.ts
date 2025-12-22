@@ -1,4 +1,4 @@
-import { Prisma } from '@prisma/client';
+import { Prisma } from '@/generated/prisma';
 import { createHash } from 'crypto';
 import { prisma } from '../../db';
 import { MockResearchProvider } from './mock_provider';
