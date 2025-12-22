@@ -31,7 +31,7 @@ export function GenerationSettings({ initialConfig }: Props) {
         });
         setStatus('success');
         setMessage('Settings saved successfully.');
-      } catch (err) {
+      } catch {
         setStatus('error');
         setMessage('Failed to save settings.');
       }
@@ -63,7 +63,7 @@ export function GenerationSettings({ initialConfig }: Props) {
           setStatus('error');
           setMessage(`Connection failed: ${result.error || result.message}`);
         }
-      } catch (err) {
+      } catch {
         setStatus('error');
         setMessage('Test failed due to network error.');
       }

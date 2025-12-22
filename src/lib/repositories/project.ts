@@ -1,5 +1,5 @@
 import { prisma } from '../db';
-import type { Project, Prisma } from '../../generated/prisma';
+import type { Project } from '../../generated/prisma';
 
 export interface CreateProjectInput {
   idea: string;

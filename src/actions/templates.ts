@@ -14,7 +14,7 @@ interface CreateTemplateParams {
 
 export async function createTemplate(params: CreateTemplateParams) {
   try {
-    const user = await getDevUser();
+    const _user = await getDevUser(); // Required for auth check
 
     // 1. Verify sources exist and are APPROVED
     const offer = await prisma.offer.findUnique({ where: { id: params.sourceOfferId } });

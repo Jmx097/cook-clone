@@ -3,7 +3,7 @@ import { prisma } from '../../db';
 import { MockAssetProvider } from './mock_provider';
 import { LLMAssetProvider } from './llm_provider';
 import { getLLMClient } from '../../llm/provider';
-import type { AssetInput, AssetResult } from './types';
+import type { AssetInput } from './types';
 import type { AssetBundle } from '../../../generated/prisma';
 import type { ResearchReportContent } from '../research/types';
 import type { OfferContentJson } from '../offer/types';

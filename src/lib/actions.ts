@@ -134,7 +134,7 @@ export async function checkOpenAIStatus(apiKey: string) {
   if (!apiKey) return { success: false, error: 'API Key missing' };
   try {
     // List models to verify key
-    const client = new OpenAIClient(apiKey);
+    const _client = new OpenAIClient(apiKey); // Created for potential future use
     // Tweak OpenAIClient to allow model listing or just try a dummy generation?
     // Using simple fetch here to avoid modifying Client just for auth check if Client is strict
     const res = await fetch('https://api.openai.com/v1/models', {
@@ -144,7 +144,7 @@ export async function checkOpenAIStatus(apiKey: string) {
     if (res.ok) return { success: true };
     const err = await res.json();
     return { success: false, error: err.error?.message || 'Invalid API Key' };
-  } catch (e: any) {
-    return { success: false, error: e.message };
+  } catch (e: unknown) {
+    return { success: false, error: e instanceof Error ? e.message : String(e) };
   }
 }

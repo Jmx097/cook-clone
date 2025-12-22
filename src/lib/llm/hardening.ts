@@ -41,7 +41,7 @@ export class BudgetManager {
     });
 
     const totalCost = result._sum.costEstimate || 0;
-    const totalTokens = (result._sum.inputTokens || 0) + (result._sum.outputTokens || 0);
+    // totalTokens can be calculated if needed: (result._sum.inputTokens || 0) + (result._sum.outputTokens || 0)
 
     // 3. Compare against limits
     // TODO: Ideally fetch these limits from a user settings table or Env Var.

@@ -155,7 +155,7 @@ export async function createDraftFromApproved(
     }
 
     return { success: true, newVersion };
-  } catch (error) {
+  } catch {
     return { success: false, error: 'Failed to create new draft' };
   }
 }
@@ -188,7 +188,6 @@ export async function getVersions(
       });
     }
     
-    return versions || [];
     return versions || [];
   } catch (error) {
     console.error('Failed to fetch versions:', error);

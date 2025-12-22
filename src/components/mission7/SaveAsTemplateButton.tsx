@@ -33,7 +33,7 @@ export default function SaveAsTemplateButton({ sourceOfferId, sourceAssetBundleI
       } else {
         alert('Failed: ' + res.error);
       }
-    } catch (e) {
+    } catch {
       alert('Error creating template');
     } finally {
       setLoading(false);

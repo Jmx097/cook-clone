@@ -274,7 +274,7 @@ export function OfferView({ projectId, initialOffer }: OfferViewProps) {
               <p className="text-xl text-white font-medium">{displayContent.positioning.oneLiner}</p>
             </div>
             <div>
-              <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Who It's For</p>
+              <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Who It&apos;s For</p>
               <p className="text-gray-300">{displayContent.positioning.whoItsFor}</p>
             </div>
             <div>

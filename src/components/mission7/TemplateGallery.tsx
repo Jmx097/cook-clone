@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useTemplate } from '../../actions/templates';
+import { useTemplate as applyTemplate } from '../../actions/templates';
 import { useRouter } from 'next/navigation';
 
 interface Template {
@@ -24,14 +24,14 @@ export default function TemplateGallery({ templates }: { templates: Template[] }
   const handleConfirmUse = async (templateId: string) => {
     if (!projectIdea.trim()) return;
     try {
-      const res = await useTemplate(templateId, projectIdea);
+      const res = await applyTemplate(templateId, projectIdea);
       if (res.success) {
         router.push(`/project/${res.projectId}/offer`);
       } else {
         alert('Failed: ' + res.error);
         setUsingId(null);
       }
-    } catch (e) {
+    } catch {
       alert('Error using template');
       setUsingId(null);
     }

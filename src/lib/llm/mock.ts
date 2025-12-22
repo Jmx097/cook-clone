@@ -4,12 +4,12 @@ import { z } from 'zod';
 export class MockClient implements LLMClient {
   
   async generateJson<T>(
-    prompt: string,
+    _prompt: string,
     schema: z.ZodSchema<T>,
-    schemaName: string = 'result',
-    systemPrompt: string = ' You are a helpful AI assistant.'
+    _schemaName: string = 'result',
+    _systemPrompt: string = ' You are a helpful AI assistant.'
   ): Promise<T> {
-    const start = Date.now();
+    // start time could be used for logging latency
     
     // Simulate latency
     await new Promise(r => setTimeout(r, 800));

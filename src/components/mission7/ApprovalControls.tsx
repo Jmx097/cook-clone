@@ -34,7 +34,7 @@ export default function ApprovalControls({
       } else {
         alert('Failed: ' + res.error);
       }
-    } catch (e) {
+    } catch {
       alert('Error approving version');
     } finally {
       setLoading(false);
@@ -51,7 +51,7 @@ export default function ApprovalControls({
       } else {
         alert('Failed: ' + res.error);
       }
-    } catch (e) {
+    } catch {
       alert('Error creating draft');
     } finally {
       setLoading(false);

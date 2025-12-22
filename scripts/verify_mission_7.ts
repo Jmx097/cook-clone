@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-async function approveVersion(entityType: string, entityId: string, projectId: string) {
+async function approveVersion(entityType: string, entityId: string) {
   const now = new Date();
   // Simulates logic in actions/versioning.ts
   if (entityType === 'Offer') {
@@ -34,7 +34,7 @@ async function createDraftFromApproved(entityType: string, sourceId: string, pro
     return { success: false };
 }
 
-async function createTemplate(params: any) {
+async function createTemplate(params: { sourceOfferId: string; sourceAssetBundleId: string; name: string }) {
     const offer = await prisma.offer.findUnique({ where: { id: params.sourceOfferId } });
     const assets = await prisma.assetBundle.findUnique({ where: { id: params.sourceAssetBundleId } });
 
@@ -70,7 +70,7 @@ async function main() {
   console.log('✅ Offer v1 created');
 
   // 2. Approve
-  await approveVersion('Offer', offer.id, project.id);
+  await approveVersion('Offer', offer.id);
   offer = (await prisma.offer.findUnique({ where: { id: offer.id } }))!;
   if (!offer.approvedAt) throw new Error('Approval failed');
   console.log('✅ Offer v1 approved');
@@ -90,7 +90,7 @@ async function main() {
   console.log('✅ Correctly rejected unapproved template');
 
   // 5. Template (Success)
-  await approveVersion('AssetBundle', assets.id, project.id);
+  await approveVersion('AssetBundle', assets.id);
   const success = await createTemplate({ name: 'Good', sourceOfferId: offer.id, sourceAssetBundleId: assets.id });
   if (!success.success) throw new Error('Template creation failed');
   console.log('✅ Template created');

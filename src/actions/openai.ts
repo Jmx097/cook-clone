@@ -1,6 +1,5 @@
 'use server';
 
-import { cookies } from 'next/headers';
 
 export async function checkOpenAIKey(): Promise<{
   connected: boolean;

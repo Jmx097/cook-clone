@@ -1,0 +1,133 @@
+﻿
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\scripts\test_analytics.ts
+  3:10  warning  'ABTestingService' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\scripts\verify_mission_7.ts
+  6:69  warning  '_projectId' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\__tests__\landingPageGenerator.test.ts
+  29:10  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  36:10  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  50:63  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  51:57  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\actions\abActions.ts
+  89:39  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\actions\editorActions.ts
+  47:30  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  64:70  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\actions\exportPage.ts
+   8:7   warning  '_streamToBuffer' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  26:19  error    Unexpected any. Specify a different type              @typescript-eslint/no-explicit-any
+  69:39  error    Unexpected any. Specify a different type              @typescript-eslint/no-explicit-any
+  70:25  error    Unexpected any. Specify a different type              @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\actions\templates.ts
+  17:11  warning  '_user' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  63:39  error    Unexpected any. Specify a different type    @typescript-eslint/no-explicit-any
+  97:43  error    Unexpected any. Specify a different type    @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\actions\versioning.ts
+  77:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  81:49  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\app\admin\preflight\page.tsx
+  27:23  error    Error: Cannot call impure function during render
+
+`performance.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\app\admin\preflight\page.tsx:27:23
+  25 | export default async function PreflightPage() {
+  26 |   // Capture timestamp once at the start of request
+> 27 |   const requestTime = performance.now();
+     |                       ^^^^^^^^^^^^^^^^^ Cannot call impure function
+  28 |
+  29 |   // 1. Database Check  
+  30 |   const dbStatus = await checkDatabase();  react-hooks/purity
+  55:12  warning  '_e' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\app\p\[slug]\page.tsx
+  46:39  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\app\project\[id]\analytics\page.tsx
+  3:10  warning  'ABTestingService' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\app\project\[id]\analytics\test\[testId]\page.tsx
+    2:10  warning  'AnalyticsService' is defined but never used  @typescript-eslint/no-unused-vars
+  119:87  error    Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\app\project\[id]\leads\CSVExportButton.tsx
+   3:53  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  26:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\app\project\[id]\pages\Editor.tsx
+  5:8  warning  'Link' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\app\project\[id]\pages\page.tsx
+  114:36  warning  '_variantId' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\components\analytics\AnalyticsCharts.tsx
+  12:17  warning  'convHeight' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\components\mission7\ApprovalControls.tsx
+  48:110  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\components\mission7\AuditLogViewer.tsx
+  7:36  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\components\mission7\VersionHistoryPanel.tsx
+  12:44  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\components\public\AbTestWrapper.tsx
+   8:9   error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  50:60  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  50:68  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\components\settings\UsageDashboard.tsx
+  77:36  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\lib\ab_testing.ts
+  76:87  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\lib\actions.ts
+  137:11  warning  '_client' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\lib\analytics.ts
+   33:11  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   62:11  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  187:61  warning  '_' is defined but never used             @typescript-eslint/no-unused-vars
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\lib\exports\job-manager.ts
+  70:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\lib\llm\mock.ts
+   9:5  warning  '_schemaName' is assigned a value but never used    @typescript-eslint/no-unused-vars
+  10:5  warning  '_systemPrompt' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\lib\llm\openai.ts
+  49:54  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  66:43  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\lib\llm\types.ts
+  24:41  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\lib\services\assets\mock_provider.test.ts
+  15:41  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  18:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\lib\services\offer\mock_provider.ts
+   43:5   warning  'existingContent' is defined but never used  @typescript-eslint/no-unused-vars
+  417:26  warning  'input' is defined but never used            @typescript-eslint/no-unused-vars
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\lib\services\research\mock_provider.ts
+  19:11  warning  'isSaaS' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\services\landingPageGenerator.ts
+  161:9   warning  'brandVoice' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  186:83  error    Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+  218:62  warning  '_research' is defined but never used            @typescript-eslint/no-unused-vars
+
+Γ£û 55 problems (36 errors, 19 warnings)
+

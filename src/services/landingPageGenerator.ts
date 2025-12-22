@@ -151,14 +151,14 @@ export async function generateLandingPage(
 // ============================================
 
 function generateDeterministicPage(assetBundle: AssetBundle, offer: Offer): LandingPageContent {
-  const assets = (assetBundle.landingCopy as any) || {};
-  const offerContent = (offer.contentJson as any) || {};
+  const assets = (assetBundle.landingCopy as Record<string, unknown>) || {};
+  const offerContent = (offer.contentJson as Record<string, unknown>) || {};
   
   // Safe extraction helper
-  const getArr = (v: any) => (Array.isArray(v) ? v : []);
-  const getStr = (v: any, def: string) => (typeof v === 'string' ? v : def);
+  const getArr = (v: unknown) => (Array.isArray(v) ? v : []);
+  const getStr = (v: unknown, def: string) => (typeof v === 'string' ? v : def);
 
-  const brandVoice = "Professional, Friendly"; // Could grab from Project if passed
+
 
   return {
     theme: {
@@ -215,7 +215,7 @@ function generateDeterministicPage(assetBundle: AssetBundle, offer: Offer): Land
   };
 }
 
-function buildPrompt(assetBundle: AssetBundle, offer: Offer, research?: ResearchReport): string {
+function buildPrompt(assetBundle: AssetBundle, offer: Offer, _research?: ResearchReport): string {
   const assets = JSON.stringify(assetBundle.landingCopy || {});
   const offerC = JSON.stringify(offer.contentJson || {});
   

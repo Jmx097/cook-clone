@@ -3,17 +3,31 @@ import { prisma } from '@/lib/db';
 
 export const dynamic = 'force-dynamic';
 
-export default async function PreflightPage() {
-  // 1. Database Check
-  let dbStatus = 'Unknown';
+// Helper to measure DB latency
+async function checkDatabase(): Promise<string> {
   try {
-    const start = Date.now();
+    const start = performance.now();
     await prisma.project.count();
-    const duration = Date.now() - start;
-    dbStatus = `Connected (${duration}ms)`;
+    const duration = Math.round(performance.now() - start);
+    return `Connected (${duration}ms)`;
   } catch (e) {
-    dbStatus = `Error: ${(e as Error).message}`;
+    return `Error: ${(e as Error).message}`;
   }
+}
+
+// Helper to format cron status
+function formatCronStatus(lastRunAt: Date | null, now: number): string {
+  if (!lastRunAt) return 'Never Run';
+  const secondsAgo = Math.floor((now - lastRunAt.getTime()) / 1000);
+  return `Last Run: ${lastRunAt.toLocaleString()} (${secondsAgo}s ago)`;
+}
+
+export default async function PreflightPage() {
+  // Capture timestamp once at the start of request
+  const requestTime = performance.now();
+
+  // 1. Database Check  
+  const dbStatus = await checkDatabase();
 
   // 2. Blob Check
   const blobStatus = process.env.BLOB_READ_WRITE_TOKEN 
@@ -24,14 +38,12 @@ export default async function PreflightPage() {
   const heartbeat = await prisma.cronHeartbeat.findUnique({
     where: { key: 'content-runner' },
   });
-  const cronStatus = heartbeat 
-    ? `Last Run: ${heartbeat.lastRunAt.toLocaleString()} (${Math.floor((Date.now() - heartbeat.lastRunAt.getTime()) / 1000)}s ago)` 
-    : 'Never Run';
+  const cronStatus = formatCronStatus(heartbeat?.lastRunAt ?? null, requestTime);
 
   // 4. Queue (ExportJobs) using groupBy
   // Note: groupBy might be disabled in some accelerate setups but usually fine. 
   // If it fails we'll wrap or use count.
-  let queueStats: Record<string, number> = {};
+  const queueStats: Record<string, number> = {};
   try {
     const stats = await prisma.exportJob.groupBy({
       by: ['status'],
@@ -40,7 +52,7 @@ export default async function PreflightPage() {
     stats.forEach(s => {
       queueStats[s.status] = s._count.status;
     });
-  } catch (e) {
+  } catch (_e) {
     // Fallback if groupBy fails
     queueStats['Error retrieving stats'] = 0;
   }

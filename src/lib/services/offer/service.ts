@@ -6,14 +6,12 @@ import { getLLMClient } from '../../llm/provider';
 import { LLMOfferProvider } from './llm_provider';
 import type { 
   OfferInput, 
-  OfferProvider, 
   OfferContentJson, 
   OfferMetaJson,
   SectionKey,
   FieldProvenance,
   OfferTier,
   OfferUpsell,
-  OfferGuarantee,
 } from './types';
 import type { ResearchReportContent } from '../research/types';
 import type { Offer } from '../../../generated/prisma';

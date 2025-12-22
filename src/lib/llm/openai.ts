@@ -33,7 +33,7 @@ export class OpenAIClient implements LLMClient {
     // 2. Retry Loop for Rate Limits
     let attempts = 0;
     const maxAttempts = 3;
-    let lastError: any;
+    let lastError: unknown;
 
     while (attempts < maxAttempts) {
       try {
@@ -85,17 +85,19 @@ export class OpenAIClient implements LLMClient {
         const parsed = JSON.parse(content);
         return schema.parse(parsed);
 
-      } catch (error: any) {
+      } catch (error: unknown) {
         lastError = error;
         // Check if retryable (429, 5xx)
         // RateLimiter error is also retryable (wait for next slot)
-        const isRateLimit = error.message?.includes('Rate Limit') || error.status === 429;
-        const isServerErr = error.status >= 500;
+        const errMsg = error instanceof Error ? error.message : '';
+        const errStatus = (error as { status?: number })?.status;
+        const isRateLimit = errMsg.includes('Rate Limit') || errStatus === 429;
+        const isServerErr = errStatus !== undefined && errStatus >= 500;
         
         if (isRateLimit || isServerErr) {
            if (attempts < maxAttempts) {
              const backoff = Math.pow(2, attempts) * 1000 + (Math.random() * 500); // 1s, 2s, 4s + jitter
-             console.warn(`Transient error (${error.message}). Retrying in ${backoff}ms...`);
+             console.warn(`Transient error (${errMsg}). Retrying in ${backoff}ms...`);
              await new Promise(r => setTimeout(r, backoff));
              continue;
            }
@@ -108,8 +110,9 @@ export class OpenAIClient implements LLMClient {
 
     // If we're here, we failed
     const latency = Date.now() - start;
-    await this.logRun('FAILED', 0, 0, latency, lastError?.message || 'Unknown error');
-    throw new Error(`OpenAI Error after ${attempts} attempts: ${lastError?.message || lastError}`);
+    const lastErrMsg = lastError instanceof Error ? lastError.message : String(lastError);
+    await this.logRun('FAILED', 0, 0, latency, lastErrMsg);
+    throw new Error(`OpenAI Error after ${attempts} attempts: ${lastErrMsg}`);
   }
 
   // Helper to log to DB (fire and forget generally, or await if strict)

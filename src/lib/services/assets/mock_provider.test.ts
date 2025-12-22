@@ -12,10 +12,10 @@ describe('MockAssetProvider', () => {
       targetMarket: 'Busy Pet Owners',
       revenueGoal: '$10k/mo',
       brandVoiceBrief: 'Friendly and Trustworthy',
-      researchContent: {} as any, // Mock doesn't use deep fields
+      researchContent: {} as unknown as any, // Mock doesn't use deep fields
       offerContent: {
         positioning: { oneLiner: 'Walks done right', whoItsFor: 'Pet owners', whyNow: 'Now' },
-      } as any
+      } as unknown as any
     };
 
     const result = await provider.generateAssets(input);

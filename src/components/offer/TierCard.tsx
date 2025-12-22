@@ -103,7 +103,7 @@ export function TierCard({ tier, isEditing, onEdit, highlight = false }: TierCar
 
       {/* Deliverables */}
       <div className="flex-1 mb-4">
-        <p className="text-xs text-gray-500 uppercase tracking-wider mb-2">What's Included</p>
+        <p className="text-xs text-gray-500 uppercase tracking-wider mb-2">What&apos;s Included</p>
         <ul className="space-y-2">
           {tier.deliverables.map((deliverable, index) => (
             <li key={index} className="flex items-start gap-2">

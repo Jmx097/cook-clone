@@ -18,9 +18,10 @@ export async function POST(
 
     const job = await createExportJob(id, type);
     return NextResponse.json(job);
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Export trigger failed:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    const msg = error instanceof Error ? error.message : String(error);
+    return NextResponse.json({ error: msg }, { status: 500 });
   }
 }
 

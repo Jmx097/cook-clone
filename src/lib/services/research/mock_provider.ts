@@ -16,7 +16,7 @@ export class MockResearchProvider implements ResearchProvider {
 
     // Deterministic mock data based on input
     const isFitness = input.idea.toLowerCase().includes('fitness') || input.idea.toLowerCase().includes('health');
-    const isSaaS = input.idea.toLowerCase().includes('saas') || input.idea.toLowerCase().includes('software');
+
 
     if (isFitness) {
       return {

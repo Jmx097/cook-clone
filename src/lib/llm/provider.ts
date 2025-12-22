@@ -1,5 +1,5 @@
 import { cookies } from 'next/headers';
-import { LLMClient, ProviderType, GenerationConfig } from './types';
+import { LLMClient, GenerationConfig } from './types';
 import { OpenAIClient } from './openai';
 
 

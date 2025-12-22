@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import path from "path";
 import fs from "fs";
-import { prisma } from "@/lib/db";
+
 
 const EXPORT_ROOT = path.join(process.cwd(), "data", "exports");
 

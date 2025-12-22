@@ -2,15 +2,13 @@
 
 import { prisma } from '@/lib/db';
 import archiver from 'archiver';
-import { Writable } from 'stream';
-import fs from 'fs';
-import path from 'path';
+import { Readable } from 'stream';
 
 // Helper to buffer the stream
-const streamToBuffer = (stream: any) => {
+const _streamToBuffer = (stream: Readable): Promise<Buffer> => {
   return new Promise<Buffer>((resolve, reject) => {
-    const chunks: any[] = [];
-    stream.on('data', (chunk: any) => chunks.push(chunk));
+    const chunks: Buffer[] = [];
+    stream.on('data', (chunk: Buffer) => chunks.push(chunk));
     stream.on('end', () => resolve(Buffer.concat(chunks)));
     stream.on('error', reject);
   });

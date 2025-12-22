@@ -20,7 +20,7 @@ interface AuditEventParams {
   entityType: string;
   entityId: string;
   action: AuditAction;
-  meta?: Record<string, any>;
+  meta?: Record<string, unknown> | object;
 }
 
 export async function logAuditEvent(params: AuditEventParams) {
@@ -37,7 +37,7 @@ export async function logAuditEvent(params: AuditEventParams) {
         metaJson: params.meta || {},
       },
     });
-  } catch (error) {
+  } catch {
     // but in a real system we might want a reliable queue.
   }
 }

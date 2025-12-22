@@ -1,5 +1,5 @@
 import { generateLandingPage } from '@/services/landingPageGenerator';
-import { prisma } from '@/lib/db';
+
 
 // Mock dependencies
 jest.mock('@/lib/db', () => ({
@@ -47,8 +47,8 @@ describe('Landing Page Generator', () => {
   });
 
   it('handles missing asset fields gracefully', async () => {
-    const mockAssetBundle = { landingCopy: {} } as any;
-    const mockOffer = { contentJson: {} } as any;
+    const mockAssetBundle = { landingCopy: {} } as unknown as any;
+    const mockOffer = { contentJson: {} } as unknown as any;
 
     const result = await generateLandingPage('test-project-id', mockAssetBundle, mockOffer);
 

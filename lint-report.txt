@@ -1,0 +1,274 @@
+﻿
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\scripts\test-exports.ts
+  5:26  error    A `require()` style import is forbidden    @typescript-eslint/no-require-imports
+  6:7   warning  'fs' is assigned a value but never used    @typescript-eslint/no-unused-vars
+  6:12  error    A `require()` style import is forbidden    @typescript-eslint/no-require-imports
+  7:7   warning  'path' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  7:14  error    A `require()` style import is forbidden    @typescript-eslint/no-require-imports
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\scripts\test_analytics.ts
+  3:10  warning  'ABTestingService' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\scripts\verify_mission_7.ts
+   6:69  warning  'projectId' is defined but never used     @typescript-eslint/no-unused-vars
+  37:39  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\__tests__\landingPageGenerator.test.ts
+   2:10  warning  'prisma' is defined but never used        @typescript-eslint/no-unused-vars
+  29:10  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  36:10  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  50:52  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  51:46  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\actions\abActions.ts
+  89:39  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\actions\audit.ts
+  23:25  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  40:12  warning  'error' is defined but never used         @typescript-eslint/no-unused-vars
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\actions\editorActions.ts
+   6:10  warning  'z' is defined but never used             @typescript-eslint/no-unused-vars
+  47:30  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  64:70  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\actions\exportPage.ts
+   5:10  warning  'Writable' is defined but never used                 @typescript-eslint/no-unused-vars
+   6:8   warning  'fs' is defined but never used                       @typescript-eslint/no-unused-vars
+   7:8   warning  'path' is defined but never used                     @typescript-eslint/no-unused-vars
+  10:7   warning  'streamToBuffer' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  10:33  error    Unexpected any. Specify a different type             @typescript-eslint/no-explicit-any
+  12:19  error    Unexpected any. Specify a different type             @typescript-eslint/no-explicit-any
+  13:31  error    Unexpected any. Specify a different type             @typescript-eslint/no-explicit-any
+  28:19  error    Unexpected any. Specify a different type             @typescript-eslint/no-explicit-any
+  71:39  error    Unexpected any. Specify a different type             @typescript-eslint/no-explicit-any
+  72:25  error    Unexpected any. Specify a different type             @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\actions\openai.ts
+  3:10  warning  'cookies' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\actions\templates.ts
+  17:11  warning  'user' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  63:39  error    Unexpected any. Specify a different type   @typescript-eslint/no-explicit-any
+  97:43  error    Unexpected any. Specify a different type   @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\actions\versioning.ts
+   77:23  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   81:49  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  158:12  warning  'error' is defined but never used         @typescript-eslint/no-unused-vars
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\app\admin\preflight\page.tsx
+  10:19  error    Error: Cannot call impure function during render
+
+`Date.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\app\admin\preflight\page.tsx:10:19
+   8 |   let dbStatus = 'Unknown';
+   9 |   try {
+> 10 |     const start = Date.now();
+     |                   ^^^^^^^^^^ Cannot call impure function
+  11 |     await prisma.project.count();
+  12 |     const duration = Date.now() - start;
+  13 |     dbStatus = `Connected (${duration}ms)`;                                                                                                      react-hooks/purity
+  12:22  error    Error: Cannot call impure function during render
+
+`Date.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\app\admin\preflight\page.tsx:12:22
+  10 |     const start = Date.now();
+  11 |     await prisma.project.count();
+> 12 |     const duration = Date.now() - start;
+     |                      ^^^^^^^^^^ Cannot call impure function
+  13 |     dbStatus = `Connected (${duration}ms)`;
+  14 |   } catch (e) {
+  15 |     dbStatus = `Error: ${(e as Error).message}`;                                                                      react-hooks/purity
+  28:73  error    Error: Cannot call impure function during render
+
+`Date.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\app\admin\preflight\page.tsx:28:73
+  26 |   });
+  27 |   const cronStatus = heartbeat 
+> 28 |     ? `Last Run: ${heartbeat.lastRunAt.toLocaleString()} (${Math.floor((Date.now() - heartbeat.lastRunAt.getTime()) / 1000)}s ago)` 
+     |                                                                         ^^^^^^^^^^ Cannot call impure function
+  29 |     : 'Never Run';
+  30 |
+  31 |   // 4. Queue (ExportJobs) using groupBy  react-hooks/purity
+  34:7   error    'queueStats' is never reassigned. Use 'const' instead                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            prefer-const
+  43:12  warning  'e' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @typescript-eslint/no-unused-vars
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\app\api\projects\[id]\export\[filename]\route.ts
+  4:10  warning  'prisma' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\app\api\projects\[id]\export\route.ts
+  21:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\app\p\[slug]\page.tsx
+  46:39  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\app\project\[id]\analytics\page.tsx
+  3:10  warning  'ABTestingService' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\app\project\[id]\analytics\test\[testId]\page.tsx
+    2:10  warning  'AnalyticsService' is defined but never used  @typescript-eslint/no-unused-vars
+  119:87  error    Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\app\project\[id]\export\page.tsx
+  41:6   warning  React Hook useEffect has a missing dependency: 'fetchJobs'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  54:14  warning  'err' is defined but never used                                                                               @typescript-eslint/no-unused-vars
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\app\project\[id]\leads\CSVExportButton.tsx
+   3:53  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  26:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\app\project\[id]\pages\Editor.tsx
+    5:8   warning  'Link' is defined but never used          @typescript-eslint/no-unused-vars
+   11:48  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   35:53  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  148:74  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  161:44  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  175:47  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  189:50  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\app\project\[id]\pages\page.tsx
+    3:38  warning  'publishLandingPageVariant' is defined but never used  @typescript-eslint/no-unused-vars
+    4:10  warning  'exportLandingPageZip' is defined but never used       @typescript-eslint/no-unused-vars
+    5:10  warning  'revalidatePath' is defined but never used             @typescript-eslint/no-unused-vars
+  115:25  warning  'variantId' is defined but never used                  @typescript-eslint/no-unused-vars
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\components\analytics\AnalyticsCharts.tsx
+  12:17  warning  'convHeight' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\components\mission7\ApprovalControls.tsx
+  37:14   warning  'e' is defined but never used             @typescript-eslint/no-unused-vars
+  48:110  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  54:14   warning  'e' is defined but never used             @typescript-eslint/no-unused-vars
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\components\mission7\AuditLogViewer.tsx
+  7:36  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\components\mission7\SaveAsTemplateButton.tsx
+  36:14  warning  'e' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\components\mission7\TemplateGallery.tsx
+  27:25  error    React Hook "useTemplate" is called in function "handleConfirmUse" that is neither a React function component nor a custom React Hook function. React component names must start with an uppercase letter. React Hook names must start with the word "use"  react-hooks/rules-of-hooks
+  34:14  warning  'e' is defined but never used                                                                                                                                                                                                                              @typescript-eslint/no-unused-vars
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\components\mission7\VersionHistoryPanel.tsx
+  12:44  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\components\offer\OfferView.tsx
+  277:88  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\components\offer\TierCard.tsx
+  106:80  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\components\public\AbTestWrapper.tsx
+   8:9   error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  50:60  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  50:68  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\components\public\SessionKeyField.tsx
+  15:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\components\public\SessionKeyField.tsx:15:5
+  13 |       localStorage.setItem('sessionKey', sk);
+  14 |     }
+> 15 |     setKey(sk);
+     |     ^^^^^^ Avoid calling setState() directly within an effect
+  16 |   }, []);
+  17 |
+  18 |   return <input type="hidden" name="sessionKey" value={key} />;  react-hooks/set-state-in-effect
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\components\research\ResearchView.tsx
+  3:10  warning  'useState' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\components\settings\GenerationSettings.tsx
+  34:16  warning  'err' is defined but never used  @typescript-eslint/no-unused-vars
+  66:16  warning  'err' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\components\settings\UsageDashboard.tsx
+  77:36  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\lib\ab_testing.ts
+   64:16  warning  'err' is defined but never used                    @typescript-eslint/no-unused-vars
+   76:87  error    Unexpected any. Specify a different type           @typescript-eslint/no-explicit-any
+  122:9   error    'sorted' is never reassigned. Use 'const' instead  prefer-const
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\lib\actions.ts
+  137:11  warning  'client' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  147:15  error    Unexpected any. Specify a different type     @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\lib\analytics.ts
+   33:11  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   62:11  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  187:61  warning  '_' is defined but never used             @typescript-eslint/no-unused-vars
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\lib\exports\job-manager.ts
+  70:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\lib\llm\hardening.ts
+  44:11  warning  'totalTokens' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\lib\llm\mock.ts
+   9:5   warning  'schemaName' is assigned a value but never used    @typescript-eslint/no-unused-vars
+  10:5   warning  'systemPrompt' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  12:11  warning  'start' is assigned a value but never used         @typescript-eslint/no-unused-vars
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\lib\llm\openai.ts
+  36:20  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  49:54  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  66:43  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  88:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\lib\llm\provider.ts
+  2:21  warning  'ProviderType' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\lib\llm\types.ts
+  24:41  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\lib\repositories\project.ts
+  2:24  warning  'Prisma' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\lib\services\assets\mock_provider.test.ts
+  15:30  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  18:12  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\lib\services\assets\service.ts
+  6:27  warning  'AssetResult' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\lib\services\offer\mock_provider.ts
+   43:5   warning  'existingContent' is defined but never used  @typescript-eslint/no-unused-vars
+  417:26  warning  'input' is defined but never used            @typescript-eslint/no-unused-vars
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\lib\services\offer\service.ts
+   9:3  warning  'OfferProvider' is defined but never used   @typescript-eslint/no-unused-vars
+  16:3  warning  'OfferGuarantee' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\lib\services\research\mock_provider.ts
+  19:11  warning  'isSaaS' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\lib\services\research\service.ts
+  1:10  warning  'Prisma' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\lib\uuid.ts
+  11:5  error  Unexpected var, use let or const instead  no-var
+
+C:\Users\jonmc\OneDrive\Documents\CookAI Clone\app\src\services\landingPageGenerator.ts
+  154:46  error    Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+  155:46  error    Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+  158:22  error    Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+  159:22  error    Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+  161:9   warning  'brandVoice' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  186:83  error    Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+  218:62  warning  'research' is defined but never used             @typescript-eslint/no-unused-vars
+
+Γ£û 118 problems (67 errors, 51 warnings)
+  3 errors and 0 warnings potentially fixable with the `--fix` option.
+

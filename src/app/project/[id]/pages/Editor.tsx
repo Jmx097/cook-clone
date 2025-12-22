@@ -4,11 +4,21 @@ import { useState } from 'react';
 import { updateLandingPageVariant, publishLandingPageVariant } from '@/actions/editorActions';
 import Link from 'next/link';
 
-// Simple types for the JSON structure
-// We just treat it as `any` or loose shape for editing speed, but ideally strictly typed.
-// Since schema is in the service, we replicate simplified interface here or use `any`.
+import { LandingPageContent } from '@/services/landingPageGenerator';
 
-export function Editor({ variant }: { variant: any }) {
+interface EditorProps {
+  variant: {
+    id: string;
+    version: number;
+    slug?: string;
+    pageJson: LandingPageContent;
+    project: {
+      idea: string;
+    };
+  };
+}
+
+export function Editor({ variant }: EditorProps) {
   const [pageJson, setPageJson] = useState(variant.pageJson);
   const [isSaving, setIsSaving] = useState(false);
   const [slug, setSlug] = useState(variant.slug || `${variant.project.idea.toLowerCase().replace(/[^a-z0-9]/g, '-')}-${variant.version}`);
@@ -32,7 +42,7 @@ export function Editor({ variant }: { variant: any }) {
   };
 
   // Helper to update a section
-  const updateSection = (sectionName: string, data: any) => {
+  const updateSection = (sectionName: keyof LandingPageContent['sections'], data: unknown) => {
     setPageJson({
       ...pageJson,
       sections: {
@@ -145,7 +155,7 @@ export function Editor({ variant }: { variant: any }) {
 }
 
 // Helpers
-function SectionEditor({ title, children, isOpen: initialOpen = false }: any) {
+function SectionEditor({ title, children, isOpen: initialOpen = false }: { title: string; children: React.ReactNode; isOpen?: boolean }) {
   const [isOpen, setIsOpen] = useState(initialOpen);
   return (
     <div className="border border-gray-800 rounded-lg overflow-hidden">
@@ -158,7 +168,7 @@ function SectionEditor({ title, children, isOpen: initialOpen = false }: any) {
   );
 }
 
-function Input({ label, value, onChange }: any) {
+function Input({ label, value, onChange }: { label: string; value?: string; onChange: (v: string) => void }) {
   return (
     <div className="space-y-1">
        <label className="text-xs text-gray-500 uppercase">{label}</label>
@@ -172,7 +182,7 @@ function Input({ label, value, onChange }: any) {
   );
 }
 
-function TextArea({ label, value, onChange }: any) {
+function TextArea({ label, value, onChange }: { label: string; value?: string | undefined; onChange: (v: string) => void }) {
   return (
     <div className="space-y-1">
        <label className="text-xs text-gray-500 uppercase">{label}</label>
@@ -186,7 +196,7 @@ function TextArea({ label, value, onChange }: any) {
   );
 }
 
-function PreviewRender({ pageJson }: { pageJson: any }) {
+function PreviewRender({ pageJson }: { pageJson: LandingPageContent }) {
   const { hero, problem, solution, leadForm, footer } = pageJson?.sections || {};
 
   return (

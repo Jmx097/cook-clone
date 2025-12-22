@@ -61,7 +61,7 @@ export class ABTestingService {
           variantId: selectedId,
           assignmentKeyHash: this.hashKey(sessionKey)
         }
-      }).catch(err => {
+      }).catch(() => {
         // Ignore unique constraint race conditions, just return selected
       });
     }
@@ -119,7 +119,7 @@ export class ABTestingService {
     // 3. Determine Winner
     // Rule: Min 100 views, Min 10 conversions. Winner LB > RunnerUp LB + 0.01
     let winnerId: string | null = null;
-    let sorted = Object.entries(results).sort((a, b) => b[1].lowerBound - a[1].lowerBound); // Descending
+    const sorted = Object.entries(results).sort((a, b) => b[1].lowerBound - a[1].lowerBound); // Descending
     
     if (sorted.length >= 2) {
       const [best, runnerUp] = sorted;

@@ -40,7 +40,7 @@ export class MockOfferProvider implements OfferProvider {
   async regenerateSections(
     input: OfferInput,
     sections: SectionKey[],
-    existingContent: OfferContentJson
+    _existingContent: OfferContentJson
   ): Promise<Partial<OfferContentJson>> {
     // Simulate regeneration delay
     await new Promise((resolve) => setTimeout(resolve, 1000));

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 
 type ExportJob = {
@@ -21,7 +21,7 @@ export default function ExportPage() {
   const [loading, setLoading] = useState(false);
 
   // Poll for job updates
-  const fetchJobs = async () => {
+  const fetchJobs = useCallback(async () => {
     if (!pid) return;
     try {
       const res = await fetch(`/api/projects/${pid}/export`);
@@ -29,16 +29,16 @@ export default function ExportPage() {
         const data = await res.json();
         setJobs(data);
       }
-    } catch (err) {
-      console.error("Failed to fetch jobs", err);
+    } catch {
+      console.error("Failed to fetch jobs");
     }
-  };
+  }, [pid]);
 
   useEffect(() => {
     fetchJobs();
     const interval = setInterval(fetchJobs, 2000);
     return () => clearInterval(interval);
-  }, [pid]);
+  }, [fetchJobs]);
 
   const triggerExport = async (type: 'PDF' | 'BUNDLE') => {
     if (!pid) return;
@@ -51,7 +51,7 @@ export default function ExportPage() {
       });
       // Immediate fetch
       await fetchJobs();
-    } catch (err) {
+    } catch {
       alert("Failed to start export");
     } finally {
       // Delay loading state turn-off slightly or keep it until status changes? 

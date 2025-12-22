@@ -1,8 +1,7 @@
 import { prisma } from '@/lib/db';
 import Link from 'next/link';
-import { generateLandingPageVariant, publishLandingPageVariant, createDraftFromPublished } from '@/actions/editorActions';
-import { exportLandingPageZip } from '@/actions/exportPage';
-import { revalidatePath } from 'next/cache';
+import { generateLandingPageVariant, createDraftFromPublished } from '@/actions/editorActions';
+
 
 // Components
 // import { Button } from '@/components/ui/button'; 
@@ -112,7 +111,7 @@ function Badge({ status }: { status: string }) {
   );
 }
 
-function ExportButton({ variantId }: { variantId: string }) {
+function ExportButton({ variantId: _variantId }: { variantId: string }) {
   // Client component for download usually, but here we invoke server action + open blob?
   // Server Actions returning a blob/base64 need client side handler.
   // We'll make this a simple form submit that downloads? 

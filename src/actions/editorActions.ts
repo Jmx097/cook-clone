@@ -3,7 +3,7 @@
 import { prisma } from '@/lib/db';
 import { generateLandingPage } from '@/services/landingPageGenerator';
 import { revalidatePath } from 'next/cache';
-import { z } from 'zod';
+
 
 export async function generateLandingPageVariant(projectId: string) {
   try {
