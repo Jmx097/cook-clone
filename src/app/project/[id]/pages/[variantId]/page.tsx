@@ -2,6 +2,7 @@ import { prisma } from '@/lib/db';
 import { notFound } from 'next/navigation';
 import { Editor } from '../Editor';
 import Link from 'next/link';
+import { LandingPageContent } from '@/services/landingPageGenerator';
 
 export default async function EditorPage({ params }: { params: Promise<{ id: string, variantId: string }> }) {
   const { id, variantId } = await params;
@@ -32,7 +33,11 @@ export default async function EditorPage({ params }: { params: Promise<{ id: str
           <span className="text-white">{variant.title}</span>
        </div>
        
-       <Editor variant={variant} />
+       <Editor variant={{
+         ...variant,
+         slug: variant.slug ?? undefined,
+         pageJson: variant.pageJson as LandingPageContent,
+       }} />
     </div>
   );
 }
