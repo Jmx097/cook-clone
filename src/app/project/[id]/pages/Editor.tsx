@@ -10,7 +10,7 @@ interface EditorProps {
   variant: {
     id: string;
     version: number;
-    slug?: string;
+    slug?: string | null;
     pageJson: LandingPageContent;
     project: {
       idea: string;
